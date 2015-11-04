@@ -143,4 +143,4 @@ add_subdirectory(3rdparty)
 add_subdirectory(ssigonvif)
 
 # Add documentation
-# add_subdirectory(doc)
+add_subdirectory(samples)
