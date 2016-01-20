@@ -1,6 +1,4 @@
 #include "ssigonvif/OnvifClientMedia.hpp"
-//#include "MediaBinding.nsmap"
-
 
 OnvifClientMedia::OnvifClientMedia(std::string url, std::string user, std::string password, bool showCapabilities) : OnvifClientDevice(url, user, password, showCapabilities){
 	if(_hasMedia){

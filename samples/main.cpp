@@ -6,14 +6,14 @@
 
 int main(int argc, char** argv){
     
-    std::string password = argv[2];
-	OnvifClientPTZ *PTZ = new OnvifClientPTZ(argv[1], "root", password, false);
-	OnvifClientMedia *Media = new OnvifClientMedia(argv[1], "root", password, false);
+	OnvifClientPTZ *PTZ = new OnvifClientPTZ(argv[1], "root", "bbb_william", false);
+	OnvifClientMedia *Media = new OnvifClientMedia(argv[1], "root", "bbb_william", false);
 	Media->createProfile("PTZ", "PTZ");
-	//Media->getProfiles();
-	//std::cout << "Configurations:" << std::endl;
+	Media->getProfiles();
+	std::cout << "Configurations:" << std::endl;
 	//PTZ->getPTZConfigurations();
-	Media->addPTZConfiguration("PTZ", "4");
+    //PTZ->getConfiguration("4");
+	//Media->addPTZConfiguration("PTZ", "4");
 
 	initscr();
 	noecho();
@@ -44,6 +44,6 @@ int main(int argc, char** argv){
 		}
 	}
 	endwin();
-	
+    
 	return 0;
 }

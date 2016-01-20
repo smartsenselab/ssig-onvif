@@ -1,5 +1,4 @@
 #include "ssigonvif/OnvifClientPTZ.hpp"
-//#include "PTZBinding.nsmap"
 
 OnvifClientPTZ::OnvifClientPTZ(std::string url, std::string user, std::string password, bool showCapabilities) : OnvifClientDevice(url, user, password, showCapabilities){
 	if(_hasPTZ){
@@ -275,8 +274,9 @@ int OnvifClientPTZ::getConfiguration(std::string configurationToken){
 		printf("Default Zoom Speed: %f\n", tptz__GetConfigurationResponse->PTZConfiguration->DefaultPTZSpeed->Zoom->x);
 		std::cout << "Coordinate System: " << tptz__GetConfigurationResponse->PTZConfiguration->DefaultPTZSpeed->Zoom->space->c_str() << std::endl;
 		std::cout << std::endl << std::endl;
+		return 0;
 	}else{
-		//PrintErr(proxyPTZ.soap);
+		return 1;
 	}
 
 	soap_destroy(soap); 
