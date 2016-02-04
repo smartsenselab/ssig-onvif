@@ -5,6 +5,7 @@
 #include "stdio.h"
 #include "gsoap/wsseapi.h"
 #include <openssl/rsa.h>
+#include <stdexcept>
  
 #include "onvif/soapDeviceBindingProxy.h"
 
@@ -12,7 +13,7 @@
 class OnvifClientDevice{
 public:
 	OnvifClientDevice();
-	OnvifClientDevice(std::string url, std::string user, std::string password, bool showCapabilities);
+	OnvifClientDevice(std::string url, std::string user, std::string password);
 	~OnvifClientDevice();
 
 public:
