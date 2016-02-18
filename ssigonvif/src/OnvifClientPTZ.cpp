@@ -20,7 +20,7 @@ void OnvifClientPTZ::getConfigurations(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__GetConfigurations *tptz__GetConfigurations = soap_new__tptz__GetConfigurations(soap, -1);
@@ -33,7 +33,7 @@ void OnvifClientPTZ::getConfigurations(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}else{
 		for(int i = 0; i<tptz__GetConfigurationsResponse->PTZConfiguration.size(); ++i){
 			this->_PTZConfigurationsTokens.push_back(tptz__GetConfigurationsResponse->PTZConfiguration[i]->token);
@@ -52,7 +52,7 @@ void OnvifClientPTZ::getStatus(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__GetStatus *tptz__GetStatus = soap_new__tptz__GetStatus(soap, -1);
@@ -67,7 +67,7 @@ void OnvifClientPTZ::getStatus(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}else{
         this->_position.push_back(tptz__GetStatusResponse->PTZStatus->Position->PanTilt->x); //pan value
         this->_position.push_back(tptz__GetStatusResponse->PTZStatus->Position->PanTilt->y); //tilt value
@@ -85,7 +85,7 @@ void OnvifClientPTZ::absoluteMove(std::string profileToken, float pan, float pan
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__AbsoluteMove *tptz__AbsoluteMove = soap_new__tptz__AbsoluteMove(soap, -1);
@@ -117,7 +117,7 @@ void OnvifClientPTZ::absoluteMove(std::string profileToken, float pan, float pan
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -132,7 +132,7 @@ void OnvifClientPTZ::relativeMove(std::string profileToken, float pan, float pan
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__RelativeMove *tptz__RelativeMove = soap_new__tptz__RelativeMove(soap, -1);
@@ -164,7 +164,7 @@ void OnvifClientPTZ::relativeMove(std::string profileToken, float pan, float pan
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 	soap_destroy(soap); 
 	soap_end(soap);
@@ -178,7 +178,7 @@ void  OnvifClientPTZ::continuousMove(std::string profileToken, float panSpeed, f
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__ContinuousMove *tptz__ContinuousMove = soap_new__tptz__ContinuousMove(soap, -1);
@@ -206,7 +206,7 @@ void  OnvifClientPTZ::continuousMove(std::string profileToken, float panSpeed, f
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -221,7 +221,7 @@ void  OnvifClientPTZ::stop(std::string profileToken, bool panTilt, bool zoom){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__Stop *tptz__Stop = soap_new__tptz__Stop(soap, -1);
@@ -238,7 +238,7 @@ void  OnvifClientPTZ::stop(std::string profileToken, bool panTilt, bool zoom){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -253,7 +253,7 @@ void  OnvifClientPTZ::setHomePosition(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__SetHomePosition *tptz__SetHomePosition = soap_new__tptz__SetHomePosition(soap, -1);
@@ -268,7 +268,7 @@ void  OnvifClientPTZ::setHomePosition(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -283,7 +283,7 @@ void OnvifClientPTZ::goToHomePosition(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__GotoHomePosition *tptz__GotoHomePosition = soap_new__tptz__GotoHomePosition(soap, -1);
@@ -298,7 +298,7 @@ void OnvifClientPTZ::goToHomePosition(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -313,7 +313,7 @@ void  OnvifClientPTZ::getConfiguration(std::string configurationToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_tptz__GetConfiguration *tptz__GetConfiguration = soap_new__tptz__GetConfiguration(soap,-1);
@@ -330,7 +330,7 @@ void  OnvifClientPTZ::getConfiguration(std::string configurationToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 

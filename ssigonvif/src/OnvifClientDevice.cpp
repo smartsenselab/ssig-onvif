@@ -28,7 +28,7 @@ OnvifClientDevice::OnvifClientDevice(std::string url, std::string user, std::str
 	        errorDetail += "\nFault:";
 	        if(soap->fault != NULL) errorDetail += soap->fault->faultstring;
 	        errorDetail + "\n";
-	        throw std::invalid_argument(errorDetail);
+	        throw std::runtime_error(errorDetail);
     	}
 	}
 
@@ -56,11 +56,11 @@ OnvifClientDevice::OnvifClientDevice(std::string url, std::string user, std::str
             errorDetail += "\nFault: ";
             errorDetail += soap->fault->faultstring;
             errorDetail + "\n";
-            throw std::invalid_argument(errorDetail);
+            throw std::runtime_error(errorDetail);
         }else{
             errorDetail += "Error: ";
             errorDetail += proxyDevice.soap->msgbuf;
-            throw std::invalid_argument(errorDetail);
+            throw std::runtime_error(errorDetail);
         }
 	}
 	
@@ -69,5 +69,38 @@ OnvifClientDevice::OnvifClientDevice(std::string url, std::string user, std::str
 }
 
 OnvifClientDevice::~OnvifClientDevice(){
+}
+
+void OnvifClientDevice::getUsers(){
+    if (SOAP_OK != soap_wsse_add_UsernameTokenDigest(proxyDevice.soap, NULL, _user.c_str(), _password.c_str())){
+		std::string errorDetail;
+		errorDetail += "ERROR:\nError Code:";
+		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultcode;
+		errorDetail += "\nFault:";
+		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
+		errorDetail + "\n";
+		throw std::runtime_error(errorDetail);
+	}
+
+	_tds__GetUsers* tds_GetUsers = soap_new__tds__GetUsers(soap, -1);
+	_tds__GetUsersResponse* tds_GetUsersResponse = soap_new__tds__GetUsersResponse(soap, -1);
+
+	if(SOAP_OK != proxyDevice.GetUsers(tds_GetUsers, tds_GetUsersResponse)){
+		std::string errorDetail;
+		errorDetail += "ERROR:\nError Code:";
+		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultcode;
+		errorDetail += "\nFault:";
+		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
+		errorDetail + "\n";
+		throw std::runtime_error(errorDetail);
+	}else{
+		for(int i = 0; i<tds_GetUsersResponse->User.size(); ++i){
+			this->_username.push_back(tds_GetUsersResponse->User[i]->Username);
+		}	
+	}
+}
+
+std::vector<std::string> OnvifClientDevice::getUsernames(){
+	return _username;
 }
 

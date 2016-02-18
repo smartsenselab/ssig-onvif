@@ -53,13 +53,16 @@ void PTZTest(std::string url){
 }
 
 int main(int argc, char** argv){
-    try{
-        OnvifClientMedia *fish1Media = new OnvifClientMedia("172.22.22.231", "root", "bbb_william");
+    /*    try{
+        OnvifClientMedia *fish1Media = new OnvifClientMedia("172.22.22.220", "root", "bbb_william");
         fish1Media->getProfiles();
     }catch(const std::invalid_argument& e){
         std::cout << e.what() << std::endl;
     }
-    //OnvifClientPTZ *fish1PTZ = new OnvifClientPTZ("172.22.22.233", "root", "bbb_william");
+     */
+
+
+    OnvifClientPTZ *fish1PTZ = new OnvifClientPTZ("172.22.22.220", "root", "bbb_william");
     //fish1Media->createProfile("PTZ", "PTZ");
     //fish1PTZ->getPTZConfigurations();
     //fish1PTZ->getConfiguration("4");
@@ -67,7 +70,6 @@ int main(int argc, char** argv){
     //fish1PTZ->getStatus("PTZ");
     //fish1PTZ->tiltUp("PTZ", 5);
    
-    /*
     initscr();
     noecho();
     int c;
@@ -97,7 +99,7 @@ int main(int argc, char** argv){
         }
     }
     endwin();
-     
+/*
      
     struct soap soap;
     soap_init1(&soap, SOAP_IO_UDP);
@@ -108,8 +110,16 @@ int main(int argc, char** argv){
     for(int i=0;i<3 ;i++)
         soap_wsdd_Hello(soap, SOAP_WSDD_ADHOC, "soap.udp://239.255.255.250:3702", soap_wsa_rand_uuid(&soap), NULL, l_cameraId, l_types, l_scopes, NULL, l_serviceAddr, 1);
     soap.connect_flags = oldFlags;
-    */
-    
+ */
+/*
+
+    OnvifClientDevice* camera = new OnvifClientDevice("172.22.22.220", "root", "bbb_william");
+    camera->getUsers();
+    std::vector<std::string> users = camera->getUsernames();
+    for(int i = 0; i<users.size(); ++i){
+        std::cout << users[i] << std::endl;
+    }
+   */
 	return 0;
 }
 

@@ -6,7 +6,7 @@ OnvifClientMedia::OnvifClientMedia(std::string url, std::string user, std::strin
 		proxyMedia.soap_endpoint = _strUrl.c_str();
 		soap_register_plugin(proxyMedia.soap, soap_wsse);
 	}else{
-		throw std::invalid_argument("Camera does not implement Media functions");
+        throw std::runtime_error(std::string("Camera does not implement Media functions"));
 	}
 }
 
@@ -21,7 +21,7 @@ void OnvifClientMedia::createProfile(std::string profileName, std::string profil
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__CreateProfile *trt__CreateProfile = soap_new__trt__CreateProfile(soap, -1);
@@ -37,7 +37,7 @@ void OnvifClientMedia::createProfile(std::string profileName, std::string profil
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 
@@ -52,7 +52,7 @@ void OnvifClientMedia::deleteProfile(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__DeleteProfile *trt__DeleteProfile = soap_new__trt__DeleteProfile(soap, -1);
@@ -67,7 +67,7 @@ void OnvifClientMedia::deleteProfile(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -83,7 +83,7 @@ void OnvifClientMedia::getProfiles(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	if (SOAP_OK != soap_wsse_add_Timestamp(proxyMedia.soap, "Time", 100000)){
@@ -93,7 +93,7 @@ void OnvifClientMedia::getProfiles(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__GetProfiles *trt__GetProfiles = soap_new__trt__GetProfiles(soap, -1);
@@ -106,14 +106,14 @@ void OnvifClientMedia::getProfiles(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}else{
 		if(trt__GetProfilesResponse->Profiles.size() > 0){
 			for(int i = 0; i < trt__GetProfilesResponse->Profiles.size(); i++){
         	    this->_profilesTokens.push_back(trt__GetProfilesResponse->Profiles[i]->token);
 			}
 		}else{
-			throw std::invalid_argument("There are no Media Profiles on the device");
+			throw std::runtime_error("There are no Media Profiles on the device");
 		}
 	}
 	soap_destroy(soap); 
@@ -127,7 +127,7 @@ void OnvifClientMedia::getProfile(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__GetProfile *trt__GetProfile = soap_new__trt__GetProfile(soap, -1);
@@ -142,7 +142,7 @@ void OnvifClientMedia::getProfile(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}else{
 		this->_profileName = trt__GetProfileResponse->Profile->Name;
 	}
@@ -160,7 +160,7 @@ void OnvifClientMedia::getVideoSourceConfigurations(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__GetVideoSourceConfigurations *trt__GetVideoSourceConfigurations = soap_new__trt__GetVideoSourceConfigurations(soap, -1);
@@ -173,14 +173,14 @@ void OnvifClientMedia::getVideoSourceConfigurations(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}else{
 		if(trt__GetVideoSourceConfigurationsResponse->Configurations.size() > 0){
 			for(int i = 0; i < trt__GetVideoSourceConfigurationsResponse->Configurations.size(); ++i){
 				this->_videoSourceConfigurationsTokens.push_back(trt__GetVideoSourceConfigurationsResponse->Configurations[i]->token);
 			}
 		}else{
-			throw std::invalid_argument("There are no Video Source Configurations on the device\n");
+			throw std::runtime_error("There are no Video Source Configurations on the device\n");
 		}
 	}
 
@@ -195,7 +195,7 @@ void OnvifClientMedia::addVideoSourceConfiguration(std::string profileToken, std
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__AddVideoSourceConfiguration *trt__AddVideoSourceConfiguration = soap_new__trt__AddVideoSourceConfiguration(soap, -1);
@@ -211,7 +211,7 @@ void OnvifClientMedia::addVideoSourceConfiguration(std::string profileToken, std
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -227,7 +227,7 @@ void OnvifClientMedia::getVideoEncoderConfigurations(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__GetVideoEncoderConfigurations *trt__GetVideoEncoderConfigurations = soap_new__trt__GetVideoEncoderConfigurations(soap, -1);
@@ -240,14 +240,14 @@ void OnvifClientMedia::getVideoEncoderConfigurations(){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}else{
 		if(trt__GetVideoEncoderConfigurationsResponse->Configurations.size() > 0){
 			for(int i = 0; i < trt__GetVideoEncoderConfigurationsResponse->Configurations.size(); ++i){
 				this->_videoEncoderConfigurationsTokens.push_back(trt__GetVideoEncoderConfigurationsResponse->Configurations[i]->token);
 			}
 		}else{
-			throw std::invalid_argument("There are no Video Source Configurations on the device\n");
+			throw std::runtime_error("There are no Video Source Configurations on the device\n");
 		}
 	}
 
@@ -262,7 +262,7 @@ void OnvifClientMedia::addVideoEncoderConfiguration(std::string profileToken, st
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__AddVideoEncoderConfiguration *trt__AddVideoEncoderConfiguration = soap_new__trt__AddVideoEncoderConfiguration(soap, -1);
@@ -278,7 +278,7 @@ void OnvifClientMedia::addVideoEncoderConfiguration(std::string profileToken, st
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -292,7 +292,7 @@ void OnvifClientMedia::getVideoEncoderConfigurationOptions(std::string profileTo
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__GetVideoEncoderConfigurationOptions *trt__GetVideoEncoderConfigurationOptions = soap_new__trt__GetVideoEncoderConfigurationOptions(soap, -1);
@@ -305,7 +305,7 @@ void OnvifClientMedia::getVideoEncoderConfigurationOptions(std::string profileTo
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -319,7 +319,7 @@ void OnvifClientMedia::setVideoEncoderConfiguration(std::string configurationTok
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__SetVideoEncoderConfiguration *trt__SetVideoEncoderConfiguration = soap_new__trt__SetVideoEncoderConfiguration(soap, -1);
@@ -340,7 +340,7 @@ void OnvifClientMedia::setVideoEncoderConfiguration(std::string configurationTok
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
@@ -356,7 +356,7 @@ void OnvifClientMedia::getStreamURI(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 	_trt__GetStreamUri *trt__GetStreamUri = soap_new__trt__GetStreamUri(soap, -1);
 	trt__GetStreamUri->StreamSetup = soap_new_tt__StreamSetup(soap, -1);
@@ -374,12 +374,12 @@ void OnvifClientMedia::getStreamURI(std::string profileToken){
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}else{
 		if(trt__GetStreamUriResponse->MediaUri != NULL){
 			this->_streamUri = trt__GetStreamUriResponse->MediaUri->Uri;
 		}else{
-			throw std::invalid_argument("Error");
+			throw std::runtime_error("Error");
 		}
 	}
 
@@ -396,7 +396,7 @@ void  OnvifClientMedia::addPTZConfiguration(std::string profileToken, std::strin
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	_trt__AddPTZConfiguration *trt__AddPTZConfiguration = soap_new__trt__AddPTZConfiguration(soap, -1);
@@ -412,7 +412,7 @@ void  OnvifClientMedia::addPTZConfiguration(std::string profileToken, std::strin
 		errorDetail += "\nFault:";
 		if(soap->fault->faultcode != NULL) errorDetail += soap->fault->faultstring;
 		errorDetail + "\n";
-		throw std::invalid_argument(errorDetail);
+		throw std::runtime_error(errorDetail);
 	}
 
 	soap_destroy(soap); 
