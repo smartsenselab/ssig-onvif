@@ -435,6 +435,6 @@ std::vector<std::string> OnvifClientMedia::getVideoEncoderConfigurationsTokens()
 	return _videoEncoderConfigurationsTokens;
 }
 
-std::string OnvifClientMedia::getStreamUri(){
+std::string OnvifClientMedia::returnStreamUri(){
 	return _streamUri;
 }

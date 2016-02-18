@@ -54,7 +54,7 @@ public:
 
 	std::vector<std::string> getVideoEncoderConfigurationsTokens();
 
-	std::string getStreamUri();
+	std::string returnStreamUri();
 
 private:
 

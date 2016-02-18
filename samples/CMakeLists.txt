@@ -7,11 +7,9 @@ if(BUILD_SAMPLES)
 	
 	add_executable(ssigonvif-samples ${SAMPLE_FILES})
 
-	find_package(Curses REQUIRED)
 
 	# Extra linking for the project.
 	target_link_libraries(ssigonvif-samples ssigonvif)
-	target_link_libraries(ssigonvif-samples ${CURSES_LIBRARIES})
 
 	target_include_directories(ssigonvif-samples PUBLIC ${PROJECT_SOURCE_DIR}/ssigonvif/include)
 	target_include_directories(ssigonvif-samples PUBLIC ${CURSES_INCLUDE_DIR})	

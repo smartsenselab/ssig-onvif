@@ -1,7 +1,6 @@
 #include "ssigonvif/OnvifClientDevice.hpp"
 #include "ssigonvif/OnvifClientPTZ.hpp"
 #include "ssigonvif/OnvifClientMedia.hpp"
-#include <ncurses.h>
 #include <string>
 #include <stdexcept>
 #include "onvif/soapRemoteDiscoveryBindingProxy.h"
@@ -61,7 +60,7 @@ int main(int argc, char** argv){
     }
      */
 
-
+/*
     OnvifClientPTZ *fish1PTZ = new OnvifClientPTZ("172.22.22.220", "root", "bbb_william");
     //fish1Media->createProfile("PTZ", "PTZ");
     //fish1PTZ->getPTZConfigurations();
@@ -69,7 +68,7 @@ int main(int argc, char** argv){
     //fish1Media->addPTZConfiguration("PTZ", "4");
     //fish1PTZ->getStatus("PTZ");
     //fish1PTZ->tiltUp("PTZ", 5);
-   
+    
     initscr();
     noecho();
     int c;
@@ -99,6 +98,7 @@ int main(int argc, char** argv){
         }
     }
     endwin();
+ */
 /*
      
     struct soap soap;
@@ -120,6 +120,17 @@ int main(int argc, char** argv){
         std::cout << users[i] << std::endl;
     }
    */
+    
+    OnvifClientMedia* media = new OnvifClientMedia("172.22.22.220", "root", "bbb_william");
+    media->getProfiles();
+    std::vector<std::string> profiles = media->getProfilesTokens();
+    for(int i = 0; i<profiles.size(); ++i){
+        std::cout << profiles[i] << std::endl;
+    }
+    
+    media->getStreamURI("profile_1_h264");
+    std::string address = media->returnStreamUri();
+    std::cout << address << std::endl;
 	return 0;
 }
 
